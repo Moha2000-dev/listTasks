@@ -1,6 +1,7 @@
 # ListTasks Console Application
 
-This is a simple C# console application that allows users to run a set of different tasks based on their input. The program provides a menu of operations and executes the selected one.
+This is a simple C# console application that allows users to run a set of different tasks based on their input. 
+The program provides a menu of operations and executes the selected one.
 
 ## Features
 
