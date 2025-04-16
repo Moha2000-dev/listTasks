@@ -8,6 +8,12 @@
             while (true)
             {
                 Console.WriteLine("Enter the task number (1-5) or 'exit' to quit:");
+                Console.WriteLine("1. Find the most frequent number in a list of integers.");
+                Console.WriteLine("2. Check if a string is a palindrome.");
+                Console.WriteLine("3. Shift a list of integers to the right by k positions.");
+                Console.WriteLine("4. Extract unique words from a sentence.");
+                Console.WriteLine("5. Exit");
+
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
                 {
@@ -18,8 +24,16 @@
                     switch (taskNumber)
                     {
                         case 1:
-                            Console.WriteLine("Enter a list of integers separated by spaces:");
-                            List<int> numbers = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
+                            Console.WriteLine("please inter how many numbers you want to enter :");
+                            int n = int.Parse(Console.ReadLine());
+                            List<int> numbers = new List<int>();
+                            for (int i = 0; i < n; i++)
+                            {
+                                Console.WriteLine("Enter a number:");
+                                numbers = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
+
+                            }
+                           
                             int frequentNumber = TopNFrequentNumber(numbers);
                             Console.WriteLine($"The most frequent number is: {frequentNumber}");
                             break;
@@ -42,6 +56,10 @@
                             string sentence = Console.ReadLine();
                             List<string> uniqueWords = ExtractUniqueWords(sentence);
                             Console.WriteLine("Unique words: " + string.Join(", ", uniqueWords));
+                            break;
+                        case 5:
+                            Console.WriteLine("Exiting the program.");
+                            Environment.Exit(0);
                             break;
                         default:
                             Console.WriteLine("Invalid task number. Please enter a number between 1 and 5.");
