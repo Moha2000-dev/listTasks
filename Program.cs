@@ -13,7 +13,7 @@
                 Console.WriteLine("3. Shift a list of integers to the right by k positions.");
                 Console.WriteLine("4. Extract unique words from a sentence.");
                 Console.WriteLine("5. Exit");
-                Console.WriteLine("6. Find the most frequent numbers in a list of integers.");
+                Console.WriteLine("6. Find the tops  frequent numbers in a list of integers.");
 
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
@@ -43,11 +43,20 @@
 
 
                         case 2:
-                            Console.WriteLine("Enter a string to check for palindrome:");
-                            string str = Console.ReadLine();
-                            bool isPalindrome = IsPalindrome(str);
-                            Console.WriteLine($"Is the string a palindrome? {isPalindrome}");
+                            Console.WriteLine("Enter a sentens to find the palindrome words: ");
+                            string sentence2 = Console.ReadLine();
+                            List<string> palindromes = new List<string>();
+                            string[] words = sentence2.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string word in words)
+                            {
+                                if (IsPalindrome(word))
+                                {
+                                    palindromes.Add(word);
+                                }
+                            }
+                            Console.WriteLine("Palindrome words: " + string.Join(", ", palindromes));
                             break;
+
                         case 3:
                             Console.WriteLine("Enter a list of integers separated by spaces:");
                             List<int> list = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
@@ -127,8 +136,12 @@
                 //DEFIND A POINTER 
                 int mostFrequent = values[0];
                 int maxCount = 0;
-                List<int> mostFrequentNumbers = new List<int>();
-                //
+
+                List<int> FrequentNumbers = new List<int>();
+                List<int> numberofappernc = new List<int>();
+                List<int> orededFrequntsNumbers = new List<int>();
+                // loop to find the numbes that at lest 2 times and add them to the frequent numbers list and add the number of times they appeared in
+                // the list of numbers with out repat in the frequnt number
                 for (int i = 0; i < values.Count; i++)
                 {
                     int count = 0;
@@ -137,31 +150,54 @@
                         if (values[i] == values[j])
                         {
                             count++;
-                            mostFrequentNumbers.Add(count);
                         }
                     }
-                    if (count > maxCount)
+                    if (count > maxCount && !FrequentNumbers.Contains(values[i]))
                     {
                         maxCount = count;
                         mostFrequent = values[i];
+                        FrequentNumbers.Add(mostFrequent);
+                        numberofappernc.Add(maxCount);
                     }
                 }
-                // loop to set the length of the list to n and add the most frequent number to the listand cheak
-                // if the number is already in the list remove it
-                for (int i = 0; i < mostFrequentNumbers.Count; i++)
+                // loop to find the most frequent numbers in the list and add them to the ordered frequnt numbers list
+                // and remove them from the frequnt numbers list and the number of times they appeared in the list of numbers
+                // Loop to find the most frequent numbers in the list and add them to the ordered frequent numbers list
+                // and remove them from the frequent numbers list and the number of times they appeared in the list of numbers
+                while (numberofappernc.Count > 0)
                 {
-                    if (mostFrequentNumbers[i] == mostFrequent)
+                    int max = numberofappernc[0];
+                    int index = 0;
+
+                    for (int j = 0; j < numberofappernc.Count; j++)
                     {
-                        mostFrequentNumbers.RemoveAt(i);
-                        i--;
+                        if (numberofappernc[j] >= max)
+                        {
+                            max = numberofappernc[j];
+                            index = j;
+                        }
+                    }
+
+                    orededFrequntsNumbers.Add(FrequentNumbers[index]);
+                    numberofappernc.RemoveAt(index);
+                    FrequentNumbers.RemoveAt(index);
+                }
+                // creat a list of linth of n and loop in it and add the most frequent numbers to it
+                List<int> nFrequentNumbers = new List<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    if (orededFrequntsNumbers.Count > 0)
+                    {
+                        nFrequentNumbers.Add(orededFrequntsNumbers[0]);
+                        orededFrequntsNumbers.RemoveAt(0);
                     }
                 }
-                return mostFrequentNumbers;
+
+                return nFrequentNumbers;
 
 
 
             }
-
 
             //Palindrome functions 
             static bool IsPalindrome(string str)
