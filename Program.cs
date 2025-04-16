@@ -5,22 +5,57 @@
 
         static void Main(string[] args)
         {
-            //Top N frequent elements
-            List<int> values = new List<int>();
-            int count = 6;
-            int frequntnumber = 0;
-            for (int i = 0; i < count; i++)
-            {
-                Console.WriteLine("Enter a number:");
-                int number = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("You entered: " + number);
-                values.Add(number);
-                Console.WriteLine("you number has been add to the list ");
-            }
-           int anser =TopNFrequentNumber(values);
-           Console.WriteLine("The most frequent number is: " +anser);
+            while (true) {
+               Console.WriteLine("Enter the task number (1-5) or 'exit' to quit:");
+                string input = Console.ReadLine();
+                if (input.ToLower() == "exit")
+                {
+                    break;
+                }
+                if (int.TryParse(input, out int taskNumber))
+                {
+                    switch (taskNumber)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter a list of integers separated by spaces:");
+                            List<int> numbers = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
+                            int frequentNumber = TopNFrequentNumber(numbers);
+                            Console.WriteLine($"The most frequent number is: {frequentNumber}");
+                            break;
+                        case 2:
+                            Console.WriteLine("Enter a string to check for palindrome:");
+                            string str = Console.ReadLine();
+                            bool isPalindrome = IsPalindrome(str);
+                            Console.WriteLine($"Is the string a palindrome? {isPalindrome}");
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter a list of integers separated by spaces:");
+                            List<int> list = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
+                            Console.WriteLine("Enter the number of positions to shift:");
+                            int k = int.Parse(Console.ReadLine());
+                            List<int> shiftedList = ShiftList(list, k);
+                            Console.WriteLine("Shifted list: " + string.Join(", ", shiftedList));
+                            break;
+                        case 4:
+                            Console.WriteLine("Enter a sentence to extract unique words:");
+                            string sentence = Console.ReadLine();
+                            List<string> uniqueWords = ExtractUniqueWords(sentence);
+                            Console.WriteLine("Unique words: " + string.Join(", ", uniqueWords));
+                            break;
+                        default:
+                            Console.WriteLine("Invalid task number. Please enter a number between 1 and 5.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid task number or 'exit' to quit.");
+                }
 
-        }
+
+
+
+            }
         static int TopNFrequentNumber(List<int> values)
         {
             int maxFrequency = 0;
@@ -47,7 +82,45 @@
 
             return frequentNumber;
         }
-        //
+        //Palindrome functions 
+        static bool IsPalindrome(string str)
+        {
+            int left = 0;
+            int right = str.Length - 1;
+            while (left < right)
+            {
+                if (str[left] != str[right])
+                {
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            return true;
+        }
+        //shift   all list function to the rigth by k steps 
+        static List<int> ShiftList(List<int> list, int k)
+        {
+            int n = list.Count;
+            k = k % n; // Handle cases where k is greater than n
+            List<int> shiftedList = new List<int>(new int[n]);
+            for (int i = 0; i < n; i++)
+            {
+                shiftedList[(i + k) % n] = list[i];
+            }
+            return shiftedList;
+        }
+        // uniqu worsds extractor feom the sentens 
+        static List<string> ExtractUniqueWords(string sentence)
+        {
+            HashSet<string> uniqueWords = new HashSet<string>();
+            string[] words = sentence.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string word in words)
+            {
+                uniqueWords.Add(word.ToLower());
+            }
+            return new List<string>(uniqueWords);
+        }
 
 
 
