@@ -5,8 +5,9 @@
 
         static void Main(string[] args)
         {
-            while (true) {
-               Console.WriteLine("Enter the task number (1-5) or 'exit' to quit:");
+            while (true)
+            {
+                Console.WriteLine("Enter the task number (1-5) or 'exit' to quit:");
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
                 {
@@ -56,73 +57,73 @@
 
 
             }
-        static int TopNFrequentNumber(List<int> values)
-        {
-            int maxFrequency = 0;
-            int frequentNumber = values[0];
-
-            for (int i = 0; i < values.Count; i++)
+            static int TopNFrequentNumber(List<int> values)
             {
-                int frequency = 0;
+                int maxFrequency = 0;
+                int frequentNumber = values[0];
 
-                for (int j = 0; j < values.Count; j++)
+                for (int i = 0; i < values.Count; i++)
                 {
-                    if (values[i] == values[j])
+                    int frequency = 0;
+
+                    for (int j = 0; j < values.Count; j++)
                     {
-                        frequency++;
+                        if (values[i] == values[j])
+                        {
+                            frequency++;
+                        }
+                    }
+
+                    if (frequency > maxFrequency)
+                    {
+                        maxFrequency = frequency;
+                        frequentNumber = values[i];
                     }
                 }
 
-                if (frequency > maxFrequency)
+                return frequentNumber;
+            }
+            //Palindrome functions 
+            static bool IsPalindrome(string str)
+            {
+                int left = 0;
+                int right = str.Length - 1;
+                while (left < right)
                 {
-                    maxFrequency = frequency;
-                    frequentNumber = values[i];
+                    if (str[left] != str[right])
+                    {
+                        return false;
+                    }
+                    left++;
+                    right--;
                 }
+                return true;
             }
-
-            return frequentNumber;
-        }
-        //Palindrome functions 
-        static bool IsPalindrome(string str)
-        {
-            int left = 0;
-            int right = str.Length - 1;
-            while (left < right)
+            //shift   all list function to the rigth by k steps 
+            static List<int> ShiftList(List<int> list, int k)
             {
-                if (str[left] != str[right])
+                int n = list.Count;
+                k = k % n; // Handle cases where k is greater than n
+                List<int> shiftedList = new List<int>(new int[n]);
+                for (int i = 0; i < n; i++)
                 {
-                    return false;
+                    shiftedList[(i + k) % n] = list[i];
                 }
-                left++;
-                right--;
+                return shiftedList;
             }
-            return true;
-        }
-        //shift   all list function to the rigth by k steps 
-        static List<int> ShiftList(List<int> list, int k)
-        {
-            int n = list.Count;
-            k = k % n; // Handle cases where k is greater than n
-            List<int> shiftedList = new List<int>(new int[n]);
-            for (int i = 0; i < n; i++)
+            // uniqu worsds extractor feom the sentens 
+            static List<string> ExtractUniqueWords(string sentence)
             {
-                shiftedList[(i + k) % n] = list[i];
+                HashSet<string> uniqueWords = new HashSet<string>();
+                string[] words = sentence.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string word in words)
+                {
+                    uniqueWords.Add(word.ToLower());
+                }
+                return new List<string>(uniqueWords);
             }
-            return shiftedList;
+
+
         }
-        // uniqu worsds extractor feom the sentens 
-        static List<string> ExtractUniqueWords(string sentence)
-        {
-            HashSet<string> uniqueWords = new HashSet<string>();
-            string[] words = sentence.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string word in words)
-            {
-                uniqueWords.Add(word.ToLower());
-            }
-            return new List<string>(uniqueWords);
-        }
-
-
-
     }
 }
