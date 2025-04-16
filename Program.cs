@@ -24,19 +24,21 @@
                     switch (taskNumber)
                     {
                         case 1:
-                            Console.WriteLine("please inter how many numbers you want to enter :");
+                            Console.WriteLine("Please enter how many numbers you want to enter:");
                             int n = int.Parse(Console.ReadLine());
                             List<int> numbers = new List<int>();
+
                             for (int i = 0; i < n; i++)
                             {
                                 Console.WriteLine("Enter a number:");
-                                numbers = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
-
+                                numbers.Add(int.Parse(Console.ReadLine()));  
                             }
-                           
+
                             int frequentNumber = TopNFrequentNumber(numbers);
                             Console.WriteLine($"The most frequent number is: {frequentNumber}");
                             break;
+
+
                         case 2:
                             Console.WriteLine("Enter a string to check for palindrome:");
                             string str = Console.ReadLine();
@@ -78,30 +80,38 @@
             // The most frequent number in a list of integers function
             static int TopNFrequentNumber(List<int> values)
             {
-                int maxFrequency = 0;
-                int frequentNumber = values[0];
+                int mostFrequent = values[0];
+                int maxCount = 0;
 
                 for (int i = 0; i < values.Count; i++)
                 {
-                    int frequency = 0;
+                    int count = 0;
 
                     for (int j = 0; j < values.Count; j++)
                     {
                         if (values[i] == values[j])
                         {
-                            frequency++;
+                            count++;
                         }
                     }
 
-                    if (frequency > maxFrequency)
+                    if (count > maxCount)
                     {
-                        maxFrequency = frequency;
-                        frequentNumber = values[i];
+                        maxCount = count;
+                        mostFrequent = values[i];
                     }
                 }
 
-                return frequentNumber;
+                return mostFrequent;
             }
+
+            static void Main(string[] args)
+            {
+                List<int> testList = new List<int> { 1, 1, 1, 2, 2, 3 };
+                int result = TopNFrequentNumber(testList);
+                Console.WriteLine("Most frequent number is: " + result);
+            }
+
             //Palindrome functions 
             static bool IsPalindrome(string str)
             {
