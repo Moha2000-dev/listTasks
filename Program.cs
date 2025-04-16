@@ -13,6 +13,7 @@
                 Console.WriteLine("3. Shift a list of integers to the right by k positions.");
                 Console.WriteLine("4. Extract unique words from a sentence.");
                 Console.WriteLine("5. Exit");
+                Console.WriteLine("6. Find the most frequent numbers in a list of integers.");
 
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
@@ -36,7 +37,9 @@
 
                             int frequentNumber = TopNFrequentNumber(numbers);
                             Console.WriteLine($"The most frequent number is: {frequentNumber}");
+                            
                             break;
+                        
 
 
                         case 2:
@@ -62,6 +65,20 @@
                         case 5:
                             Console.WriteLine("Exiting the program.");
                             Environment.Exit(0);
+                            break;
+                        case 6:
+                            Console.WriteLine("Please enter how many numbers you want to enter:");
+                            int n2 = int.Parse(Console.ReadLine());
+                            List<int> numbers2 = new List<int>();
+                            for (int i = 0; i < n2; i++)
+                            {
+                                Console.WriteLine("Enter a number:");
+                                numbers2.Add(int.Parse(Console.ReadLine()));
+                            }
+                            Console.WriteLine("how many tops do you want ");
+                            int nValue = int.Parse(Console.ReadLine());
+                            List<int> frequentNumbers = TopNfrequeNumber2(numbers2, nValue);
+                            Console.WriteLine($"The most frequent numbers are: {string.Join(", ", frequentNumbers)}");
                             break;
                         default:
                             Console.WriteLine("Invalid task number. Please enter a number between 1 and 5.");
@@ -104,13 +121,47 @@
 
                 return mostFrequent;
             }
-
-            static void Main(string[] args)
+            // the most frequent number in a list of integers and ask the user to enter waht n he need
+           static List <int> TopNfrequeNumber2(List <int> values, int n)
             {
-                List<int> testList = new List<int> { 1, 1, 1, 2, 2, 3 };
-                int result = TopNFrequentNumber(testList);
-                Console.WriteLine("Most frequent number is: " + result);
+                //DEFIND A POINTER 
+                int mostFrequent = values[0];
+                int maxCount = 0;
+                List<int> mostFrequentNumbers = new List<int>();
+                //
+                for (int i = 0; i < values.Count; i++)
+                {
+                    int count = 0;
+                    for (int j = 0; j < values.Count; j++)
+                    {
+                        if (values[i] == values[j])
+                        {
+                            count++;
+                            mostFrequentNumbers.Add(count);
+                        }
+                    }
+                    if (count > maxCount)
+                    {
+                        maxCount = count;
+                        mostFrequent = values[i];
+                    }
+                }
+                // loop to set the length of the list to n and add the most frequent number to the listand cheak
+                // if the number is already in the list remove it
+                for (int i = 0; i < mostFrequentNumbers.Count; i++)
+                {
+                    if (mostFrequentNumbers[i] == mostFrequent)
+                    {
+                        mostFrequentNumbers.RemoveAt(i);
+                        i--;
+                    }
+                }
+                return mostFrequentNumbers;
+
+
+
             }
+
 
             //Palindrome functions 
             static bool IsPalindrome(string str)
