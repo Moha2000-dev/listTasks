@@ -75,6 +75,7 @@
 
 
             }
+            // The most frequent number in a list of integers function
             static int TopNFrequentNumber(List<int> values)
             {
                 int maxFrequency = 0;
