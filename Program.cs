@@ -49,12 +49,12 @@
                             string[] words = sentence2.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (string word in words)
                             {
-                                if (IsPalindrome(word))
+                                if (!IsPalindrome(word))
                                 {
                                     palindromes.Add(word);
                                 }
                             }
-                            Console.WriteLine("Palindrome words: " + string.Join(", ", palindromes));
+                            Console.WriteLine("not Palindrome words: " + string.Join(", ", palindromes));
                             break;
 
                         case 3:
@@ -228,16 +228,24 @@
                 return shiftedList;
             }
             // uniqu worsds extractor feom the sentens 
+            // Extracts unique words from a sentence without using HashSet
             static List<string> ExtractUniqueWords(string sentence)
             {
-                HashSet<string> uniqueWords = new HashSet<string>();
+                List<string> uniqueWords = new List<string>();
                 string[] words = sentence.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+
                 foreach (string word in words)
                 {
-                    uniqueWords.Add(word.ToLower());
+                    string lowerWord = word.ToLower();
+                    if (!uniqueWords.Contains(lowerWord))
+                    {
+                        uniqueWords.Add(lowerWord);
+                    }
                 }
-                return new List<string>(uniqueWords);
+
+                return uniqueWords;
             }
+
             //testeing
 
 
